@@ -19,7 +19,7 @@ const Home = () => {
 
   return (
     <>
-    <div className="banner banner_joker">
+      <div className="banner banner_joker">
         <div className="content">
           <h2>Put on a <span>Happy</span> face</h2>
           <p>
@@ -50,7 +50,7 @@ const Home = () => {
           allowFullScreen />
         <img src="/static/close.png" alt="close" className="close" onClick={() => setTrailerToggle(!trailerToggle)}/>
       </div>
-      </>
+    </>
   )
 }
 
