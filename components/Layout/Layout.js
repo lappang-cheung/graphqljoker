@@ -1,5 +1,6 @@
-import Head from 'next/head';
 import {useState, useEffect} from "react";
+import PropTypes from 'prop-types';
+import Head from 'next/head';
 
 import Header from '../Header/Header';
 import Sidebar from '../Navigation/Sidebar/Sidebar';
@@ -12,10 +13,6 @@ const Layout = ({ children }) => {
     if(event.keyCode === 27) {
       setMenuToggle(false)
     }
-  }
-  
-  const handleMenuToggled = (event) => {
-     setMenuToggle(menuToggle => !menuToggle)
   }
   
   useEffect(() => {
@@ -34,15 +31,19 @@ const Layout = ({ children }) => {
       </Head>
       <Header
         menuToggle={menuToggle}
-        handleMenuToggle={handleMenuToggled}
+        setMenuToggle={setMenuToggle}
       />
       <Sidebar
         menuToggle={menuToggle}
-        handleMenuToggle={handleMenuToggled}
+        setMenuToggle={setMenuToggle}
       />
       {children}
     </div>
   );
 };
+
+Layout.propTypes = {
+    children: PropTypes.object.isRequired
+}
 
 export default Layout;

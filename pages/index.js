@@ -12,10 +12,6 @@ const HELLO_QUERY = gql`
 const Home = () => {
 
   const [trailerToggle, setTrailerToggle] = useState(false);
-  
-  const handleTrailerToggled = () => {
-    setTrailerToggle(trailerToggle => !trailerToggle)
-  }
 
   const { data, loading, error} = useQuery(HELLO_QUERY)
 
@@ -32,7 +28,7 @@ const Home = () => {
             Is it just me or ..... Is it getting crazier out there?"
           </p>
           <a href={null} className="play">
-            <img src="/static/play.png" alt="play" onClick={handleTrailerToggled}/>
+            <img src="/static/play.png" alt="play" onClick={() => setTrailerToggle(!trailerToggle)}/>
               Watch Trailer
           </a>
           <div className="slide slide_joker"></div>
@@ -52,7 +48,7 @@ const Home = () => {
           frameBorder="0"
           allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen />
-        <img src="/static/close.png" alt="close" className="close" onClick={handleTrailerToggled}/>
+        <img src="/static/close.png" alt="close" className="close" onClick={() => setTrailerToggle(!trailerToggle)}/>
       </div>
       </>
   )

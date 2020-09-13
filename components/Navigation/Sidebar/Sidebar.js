@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { withRouter } from 'next/router';
 
-const Sidebar = ({ menuToggle, handleMenuToggle}) => {
+const Sidebar = ({ menuToggle, setMenuToggle}) => {
   
   const url = ""
   
@@ -22,7 +22,7 @@ const Sidebar = ({ menuToggle, handleMenuToggle}) => {
             ? "sidebar_close activeClose"
             : "sidebar_close"
         }
-        onClick={handleMenuToggle}
+        onClick={() => setMenuToggle(false)}
       />
         <nav className="nav">
           <ul>
@@ -34,7 +34,6 @@ const Sidebar = ({ menuToggle, handleMenuToggle}) => {
               )
                 ? null : 'active'}>
               <Link 
-                onClick={() => handleMenuToggle}
                 href="/"
               >
                 <a>Joker</a>
@@ -63,7 +62,7 @@ const Sidebar = ({ menuToggle, handleMenuToggle}) => {
 
 Sidebar.propTypes = {
     menuToggle: PropTypes.bool.isRequired,
-    handleMenuToggle: PropTypes.func.isRequired
+    setMenuToggle: PropTypes.func.isRequired
 }
 
 export default withRouter(Sidebar);

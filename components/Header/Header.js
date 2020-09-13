@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 
-const Header = ({ handleMenuToggle}) => {
+const Header = ({ setMenuToggle}) => {
     
     return(
       <>
@@ -13,7 +13,7 @@ const Header = ({ handleMenuToggle}) => {
               src="/static/toggle.png"
               alt="toggle"
               className="toggleBtn"
-              onClick={handleMenuToggle}
+              onClick={() => setMenuToggle(true)}
             />
           </div>
         </header>
@@ -22,7 +22,7 @@ const Header = ({ handleMenuToggle}) => {
   };
 
   Header.propTypes = {
-      handleMenuToggle: PropTypes.func.isRequired
+    setMenuToggle: PropTypes.func.isRequired
   }
   
   export default Header;
