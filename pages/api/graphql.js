@@ -1,13 +1,18 @@
 import { ApolloServer, gql } from 'apollo-server-micro';
+import { mergeResolvers, mergeTypeDefs } from '@graphql-tools/merge';
 import connectDB from '../../lib/mongoose';
 
-const typeDefs = gql`
+import { moviesResolvers } from '../../api/movies/resolvers/resolvers';
+import { movieMutations } from '../../api/movies/mutations/mutation';
+import Movies from '../../api/movies/Movies.graphql';
+
+const fakeTypeDefs = gql`
     type Query {
         sayHello: String
     }
 `;
 
-const resolvers = {
+const fakeResolvers = {
     Query: {
         sayHello: () => {
             return "Hello World"
@@ -15,10 +20,21 @@ const resolvers = {
     }
 };
 
+const resolvers = mergeResolvers([
+    fakeResolvers,
+    moviesResolvers,
+    movieMutations
+]);
+
+const typeDefs = mergeTypeDefs([
+    fakeTypeDefs,
+    Movies
+])
+
 const apolloServer = new ApolloServer({
     typeDefs,
     resolvers
-})
+});
 
 export const config = {
     api: {
