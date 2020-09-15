@@ -5,7 +5,7 @@ import Head from 'next/head';
 import Header from '../Header/Header';
 import Sidebar from '../Navigation/Sidebar/Sidebar';
 
-const Layout = ({ children }) => {
+const Layout = ({ children, setMovieSelected, movieSelected }) => {
   
   const [menuToggle, setMenuToggle] = useState(false);
   
@@ -26,7 +26,7 @@ const Layout = ({ children }) => {
   return (
     <div>
       <Head>
-        <title>Joker</title>
+        <title>{movieSelected}</title>
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <Header
@@ -36,6 +36,8 @@ const Layout = ({ children }) => {
       <Sidebar
         menuToggle={menuToggle}
         setMenuToggle={setMenuToggle}
+        movieSelected={movieSelected}
+        setMovieSelected={setMovieSelected}
       />
       {children}
     </div>
@@ -43,7 +45,9 @@ const Layout = ({ children }) => {
 };
 
 Layout.propTypes = {
-    children: PropTypes.object.isRequired
+    children: PropTypes.object.isRequired,
+    setMovieSelected: PropTypes.func.isRequired,
+    movieSelected: PropTypes.string.isRequired
 }
 
 export default Layout;

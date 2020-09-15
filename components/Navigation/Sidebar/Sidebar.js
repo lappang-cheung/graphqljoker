@@ -1,10 +1,26 @@
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-import { withRouter } from 'next/router';
+import { withApollo } from '../../../lib/apollo';
+import { useQuery } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
 
-const Sidebar = ({ menuToggle, setMenuToggle}) => {
-  
-  const url = ""
+const GET_MOVIES_TITLE = gql`
+    query getMovies {
+        movies {
+            _id
+            title
+        }
+    }
+`;
+
+const Sidebar = ({ 
+  menuToggle, 
+  setMenuToggle,
+  movieSelected,
+  setMovieSelected
+}) => {
+
+  const { data, loading, error} = useQuery(GET_MOVIES_TITLE)
   
   return (
     <aside
@@ -26,34 +42,42 @@ const Sidebar = ({ menuToggle, setMenuToggle}) => {
       />
         <nav className="nav">
           <ul>
-            <li className={
-              (
-                url.includes('ssjoker') ||
-                url.includes('dkjoker') ||
-                url.includes('tbjoker')
-              )
-                ? null : 'active'}>
-              <Link 
-                href="/"
-              >
-                <a>Joker</a>
-              </Link>
-            </li>
-            <li className={url.includes('ssjoker') ? 'active' : null}>
-              <Link href="/ssjoker">
-                <a>Suicide Squad</a>
-              </Link>
-            </li>
-            <li className={url.includes('dkjoker') ? 'active' : null}>
-              <Link href="/dkjoker">
-                <a>Dark Knight</a>
-              </Link>
-            </li>
-            <li className={url.includes('tbjoker') ? 'active' : null}>
-              <Link href="/tbjoker">
-                <a>Batman 1989</a>
-              </Link>
-            </li>
+            {
+              data && data.movies.map(link => {
+                if(link.title === movieSelected) {
+                  return (
+                    <li
+                      className="active"
+                      style={{
+                        cursor: 'pointer'
+                      }}
+                      key={`${link._id}`}
+                      onClick={() => {
+                        setMovieSelected(link.title)
+                        setMenuToggle(false)
+                      }}
+                    >
+                      <a href={null}>{link.title}</a>
+                    </li>
+                    )
+                } else {
+                  return (
+                    <li
+                      style={{
+                        cursor: 'pointer'
+                      }}
+                      key={`${link._id}`}
+                      onClick={() => {
+                        setMovieSelected(link.title)
+                        setMenuToggle(false)
+                      }}
+                    >
+                      <a href={null}>{link.title}</a>
+                    </li>
+                    )
+                }
+              })
+            }
           </ul>
         </nav>
     </aside>
@@ -62,7 +86,9 @@ const Sidebar = ({ menuToggle, setMenuToggle}) => {
 
 Sidebar.propTypes = {
     menuToggle: PropTypes.bool.isRequired,
-    setMenuToggle: PropTypes.func.isRequired
+    setMenuToggle: PropTypes.func.isRequired,
+    movieSelected: PropTypes.string.isRequired,
+    setMovieSelected: PropTypes.func.isRequired
 }
 
-export default withRouter(Sidebar);
+export default withApollo(Sidebar);
