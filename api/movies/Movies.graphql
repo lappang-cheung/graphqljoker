@@ -1,11 +1,17 @@
 type Movie {
     _id: ID!
     title: String!
+    quote: String!
+    line: String!
+    trailer: String!
 }
 
 input MovieInput {
     _id: ID
     title: String!
+    quote: String!
+    line: String!
+    trailer: String!
 }
 
 type Mutation {
