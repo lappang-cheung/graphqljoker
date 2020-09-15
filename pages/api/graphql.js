@@ -17,7 +17,9 @@ const typeDefs = mergeTypeDefs([
 
 const apolloServer = new ApolloServer({
     typeDefs,
-    resolvers
+    resolvers,
+    introspection: true,  
+    playground: true,
 });
 
 export const config = {
