@@ -6,28 +6,12 @@ import { movieResolvers } from '../../api/movies/resolvers/resolvers';
 import { movieMutations } from '../../api/movies/mutations/mutation';
 import Movies from '../../api/movies/Movies.graphql';
 
-const fakeTypeDefs = gql`
-    type Query {
-        sayHello: String
-    }
-`;
-
-const fakeResolvers = {
-    Query: {
-        sayHello: () => {
-            return "Hello World"
-        }
-    }
-};
-
 const resolvers = mergeResolvers([
-    fakeResolvers,
     movieResolvers,
     movieMutations
 ]);
 
 const typeDefs = mergeTypeDefs([
-    fakeTypeDefs,
     Movies
 ])
 
