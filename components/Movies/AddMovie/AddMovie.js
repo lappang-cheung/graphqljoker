@@ -15,7 +15,9 @@ const ADD_MOVIE = gql`
 
 const AddMovies = () => {
 
-    const [addMovie] = useMutation(ADD_MOVIE)
+    const [addMovie] = useMutation(ADD_MOVIE, {
+        refetchQueries: ['getMovies']
+    })
 
     const initialInputState = {
         title: "",

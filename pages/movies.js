@@ -19,13 +19,7 @@ import AddMovies from '../components/Movies/AddMovie/AddMovie';
 
 const Movies = () => {
 
-    // const [movies, setMovies] = useState([]);
     const { data, loading } = useQuery(GET_MOVIES);
-
-
-    // const updateMovies = (movie) => {
-    //     setMovies([...movies, movie])
-    // }
 
     if(loading) return <section />
 
@@ -48,9 +42,7 @@ const Movies = () => {
                 </ul>
             
 
-                <AddMovies
-                    // updateMovies={updateMovies}
-                />
+                <AddMovies />
 
             </div>
         </div>
