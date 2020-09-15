@@ -1,26 +1,56 @@
 import { useState } from 'react';
+import { useMutation } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
 
-const AddMovies = ({ updateMovies }) => {
+const ADD_MOVIE = gql`
+    mutation addMovie($movie: MovieInput) {
+        addMovie(movie: $movie) {
+            _id
+            title
+            line
+            trailer
+        }
+    }
+`;
+
+const AddMovies = () => {
+
+    const [addMovie] = useMutation(ADD_MOVIE)
 
     const initialInputState = {
         title: "",
         quote: "",
         line: "",
         trailer: "",
-        poster: "",
-        background: ""
+        // poster: "",
+        // background: ""
     }
     const [movie, setMovie] = useState(initialInputState);
     const { title, quote, line, trailer, poster, background } = movie;
 
     const handleInputChange = (e) => {
         setMovie({ ...movie, [e.target.name]: e.target.value})
-        // console.log(movie)
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        updateMovies(movie)
+        addMovie({
+            variables: {
+                movie: {
+                    title: movie.title,
+                    quote: movie.quote,
+                    line: movie.line,
+                    trailer: movie.trailer
+                }
+            }
+        })
+        setMovie({
+            title: "",
+            quote: "",
+            line: "",
+            trailer: ""
+        })
+
     }
 
     return(
@@ -60,7 +90,7 @@ const AddMovies = ({ updateMovies }) => {
                 value={trailer}
                 onChange={handleInputChange}
             />
-            <br/>
+            {/* <br/>
             <label style={{color: 'white'}}>Poster</label>
             <input 
                 type="file" 
@@ -77,7 +107,7 @@ const AddMovies = ({ updateMovies }) => {
                 id="movie_background"
                 value={background}
                 onChange={handleInputChange}
-            />
+            /> */}
             <br/>
             <button>Submit</button>
             <button>Cancel</button>
